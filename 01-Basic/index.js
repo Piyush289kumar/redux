@@ -1,19 +1,25 @@
 import { createStore } from "redux";
 // Store
 const store = createStore(reducer);
+
+const history = [];
+
 // Reducer
-function reducer(state = { amount: 1 }, action) {
+function reducer(state = { amount: 0 }, action) {
   if (action.type === "add") {
-    return { state: state.amount + 1 };
+    // state.amount = state.amount + 1;
+    return { amount: state.amount + 1 };
   }
 
   return state;
 }
 // Global Store
-console.log(store.getState());
+store.subscribe(() => {
+  history.push(store.getState());
+  console.log(history);
+});
 
 // Change Global State
-store.dispatch({ type: "add" });
-
-console.log(store.getState());
-console.log(store.getState());
+setInterval(() => {
+  store.dispatch({ type: "add" });
+}, 2000);
