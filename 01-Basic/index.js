@@ -12,6 +12,14 @@ function reducer(state = { amount: 0 }, action) {
     return { amount: state.amount + 1 };
   }
 
+  if (action.type === "remove") {
+    return { amount: state.amount - 1 };
+  }
+
+  if (action.type === "addByAmount") {
+    return { amount: state.amount + action.payload };
+  }
+
   return state;
 }
 // Global Store
@@ -22,5 +30,5 @@ store.subscribe(() => {
 
 // Change Global State
 setInterval(() => {
-  store.dispatch({ type: "add" });
+  store.dispatch({ type: "addByAmount", payload: 10 });
 }, 2000);
