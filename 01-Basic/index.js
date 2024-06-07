@@ -44,9 +44,8 @@ store.subscribe(() => {
 
 // Action Creaters
 
-function init(value) {
-  getUser();
-  return { type: INIT, payload: value };
+function init() {
+  return { type: INIT, payload: data.amount };
 }
 function add() {
   return { type: ADD_ITEM };
