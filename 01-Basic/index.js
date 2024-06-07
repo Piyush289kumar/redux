@@ -1,3 +1,4 @@
+import axios from "axios";
 import { createStore, applyMiddleware } from "redux";
 import logger from "redux-logger";
 
@@ -44,6 +45,7 @@ store.subscribe(() => {
 // Action Creaters
 
 function init(value) {
+  getUser();
   return { type: INIT, payload: value };
 }
 function add() {
@@ -55,6 +57,11 @@ function remove() {
 
 function addByAmount(val = 2) {
   return { type: ADD_ITEM_BY_AMT, payload: val };
+}
+
+async function getUser() {
+  const { data } = await axios.get("http://localhost:3000/account/1");
+  console.log("data", data);
 }
 
 setInterval(() => {
