@@ -12,5 +12,19 @@
             "id": 3,
             "amount": 500
         }
+    ],
+    "bouns": [
+        {
+            "id": 1,
+            "points": 2
+        },
+        {
+            "id": 2,
+            "points": 3
+        },
+        {
+            "id": 3,
+            "points": 5
+        }
     ]
 }
