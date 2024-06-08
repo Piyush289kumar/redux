@@ -1,14 +1,17 @@
 import axios from "axios";
 import { createStore, applyMiddleware } from "redux";
+import thunk from "redux-thunk"; // Correct import for redux-thunk from "redux-thunk"; // Correct import for redux-thunk
 import logger from "redux-logger";
-
 // Constants
 const INIT = "init";
 const ADD_ITEM = "add";
 const REMOVE_ITEM = "remove";
 const ADD_ITEM_BY_AMT = "addByAmount";
 // Store
-const store = createStore(reducer, applyMiddleware(logger.default));
+const store = createStore(
+  reducer,
+  applyMiddleware(thunk.default, logger.default)
+);
 
 const history = [];
 
@@ -40,12 +43,14 @@ store.subscribe(() => {
   console.log(history);
 });
 
-// Change Global State
+async function getUserAmount(dispatch, getState) {
+  await axios.get("http://localhost:3000/account/1");
+  init(data.amount);
+}
 
 // Action Creaters
-
-function init() {
-  return { type: INIT, payload: data.amount };
+function init(value) {
+  return { type: INIT, payload: value };
 }
 function add() {
   return { type: ADD_ITEM };
@@ -58,11 +63,4 @@ function addByAmount(val = 2) {
   return { type: ADD_ITEM_BY_AMT, payload: val };
 }
 
-async function getUser() {
-  const { data } = await axios.get("http://localhost:3000/account/1");
-  console.log("data", data);
-}
-
-setInterval(() => {
-  store.dispatch(init(5000));
-}, 2000);
+store.dispatch(getUserAmount());
